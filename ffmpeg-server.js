@@ -26,7 +26,7 @@ function decodeVideo(videoPath, seekTime) {
             '-i', videoPath,
             '-frames:v', '1',
             '-q:v', '2',
-            '-vf', 'scale=1280:-1:force_original_aspect_ratio=decrease',
+            '-vf', 'scale=640:-1:force_original_aspect_ratio=decrease',
             '-f', 'image2pipe',
             '-'
         ];
