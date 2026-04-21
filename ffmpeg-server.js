@@ -93,12 +93,15 @@ app.post('/decode', async (req, res) => {
         return res.status(400).json({ error: 'Invalid seekTime' });
     }
 
-    //console.log(`Processing: ${videoPath} at ${seekTime}s`);
+    const startTime = Date.now();
+
+    console.log(`Processing: ${videoPath} at ${seekTime}s`);
 
     try {
         const result = await limit(() => decodeVideo(videoPath, seekTime));
         res.json(result);
-        console.log(`Processed ${videoPath}`);
+        const elapsed = Date.now() - startTime;
+        console.log(`Processed ${videoPath} (${elapsed}ms)`);
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
         console.log(`ERROR:${error.message}, ${videoPath}`);

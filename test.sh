@@ -19,10 +19,26 @@ run_job() {
   rm -f /tmp/resp_$$.dat
 }
 
-while true; do
-  for file in drvs/drive_5/messed/*.mp4; do
+if [ -z "$1" ]; then
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
 
-    SEEK_TIME=$((60 + RANDOM % 60))
+TARGET_DIR="$1"
+
+shopt -s nullglob
+files=("$TARGET_DIR"/*.mp4)
+shopt -u nullglob
+
+if [ ${#files[@]} -eq 0 ]; then
+  echo "No mp4 files found in $TARGET_DIR"
+  exit 1
+fi
+
+while true; do
+  for file in "${files[@]}"; do
+
+    SEEK_TIME=$((60 + RANDOM % 600))
 
     run_job "$file" "$SEEK_TIME" &
 
