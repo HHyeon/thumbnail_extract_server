@@ -26,7 +26,7 @@ function decodeVideo(videoPath, seekTime) {
             '-i', videoPath,
             '-frames:v', '1',
             '-q:v', '2',
-            '-vf', 'scale=640:-1:force_original_aspect_ratio=decrease',
+            '-vf', 'scale=1280:-1:force_original_aspect_ratio=decrease',
             '-f', 'image2pipe',
             '-'
         ];
@@ -105,6 +105,7 @@ app.post('/decode', async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
         console.log(`ERROR:${error.message}, ${videoPath}`);
+        process.exit(1);
     }
 });
 
